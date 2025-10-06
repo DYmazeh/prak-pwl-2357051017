@@ -13,7 +13,7 @@
             <tr>
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->nama }}</td>
-                <td>{{ $user->nim }}</td>
+                <td>{{ $user->npm }}</td>
                 <td>{{ $user->nama_kelas }}</td>
             </tr>
             @empty
