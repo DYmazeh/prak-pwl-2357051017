@@ -10,14 +10,37 @@
                 <th>ID</th>
                 <th>Nama Mata Kuliah</th>
                 <th>SKS</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
+            @if(session('success'))
+            <meta name="flash-success" content="{{ session('success') }}">
+            <tr>
+                <td colspan="4">
+                    <noscript>
+                        <div style="color:green">{{ session('success') }}</div>
+                    </noscript>
+                </td>
+            </tr>
+            @endif
             @foreach ($mks as $mk)
             <tr>
                 <td>{{ $mk->id }}</td>
                 <td>{{ $mk->nama_mk }}</td>
                 <td>{{ $mk->sks }}</td>
+                <td>
+                    <a href="{{ route('matakuliah.edit', $mk->id) }}" class="btn btn-sm btn-warning">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                    <form action="{{ route('matakuliah.destroy', $mk->id) }}" method="POST" style="display:inline; margin-left:6px;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">
+                            <i class="bi bi-trash"></i> Hapus
+                        </button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

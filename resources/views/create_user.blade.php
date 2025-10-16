@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-7">
@@ -24,10 +25,31 @@
                             @endforeach
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success w-100">Simpan</button>
+                    <button type="submit" class="btn gradient-btn w-100">Simpan</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.gradient-btn {
+    background: linear-gradient(90deg, #6366f1 0%, #7c3aed 100%);
+    color: #fff !important;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.7rem;
+    padding: 0.6rem 1rem;
+    transition: box-shadow 0.3s, transform 0.2s, opacity 0.2s;
+}
+.gradient-btn:hover {
+    box-shadow: 0 4px 16px rgba(99,102,241,0.18);
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+.gradient-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 12px rgba(99,102,241,0.18);
+}
+</style>
 @endsection
