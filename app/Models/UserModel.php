@@ -10,6 +10,9 @@ class UserModel extends Model
     use HasFactory;
     protected $table = 'user';
     protected $guarded = ['id'];
+    protected $primaryKey = 'uuid';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function kelas()
     {
@@ -20,5 +23,15 @@ class UserModel extends Model
         return $this->join('kelas', 'kelas.id', '=', 'user.kelas_id')
             ->select('user.*', 'kelas.nama_kelas as nama_kelas')
             ->get();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
     }
 }
