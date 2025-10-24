@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MataKuliahController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,18 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/profile/{nama}/{kelas}/{npm}', [ProfileController::class, 'profile']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/user', [UserController::class, 'index']);
-Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-Route::post('/user', [UserController::class, 'store'])->name('user.store');
-Route::get('/user/{uuid}/edit', [UserController::class, 'edit'])->name('user.edit');
-Route::put('/user/{uuid}', [UserController::class, 'update'])->name('user.update');
-Route::delete('/user/{uuid}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::get('/matakuliah', [MataKuliahController::class, 'index']);
-Route::get('/matakuliah/create', [MataKuliahController::class, 'create'])->name('matakuliah.create');
-Route::post('/matakuliah', [MataKuliahController::class, 'store'])->name('matakuliah.store');
-Route::get('/matakuliah/{id}/edit', [MataKuliahController::class, 'edit'])->name('matakuliah.edit');
-Route::put('/matakuliah/{id}', [MataKuliahController::class, 'update'])->name('matakuliah.update');
-Route::delete('/matakuliah/{id}', [MataKuliahController::class, 'destroy'])->name('matakuliah.destroy');
+require __DIR__.'/auth.php';
